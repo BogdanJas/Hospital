@@ -48,6 +48,5 @@ func main(){
 
 	basepath := server.Group("/hospital")
 	patientcontrolers.RegisterpatientRoutes(basepath)
-
 	log.Fatal(server.Run(":8080"))
 }
