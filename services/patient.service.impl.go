@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"errors"
+	"time"
 
 	"github.com/BogdanJas/Hospital/models"
 	"go.mongodb.org/mongo-driver/bson"
@@ -22,6 +23,7 @@ func NewPatientService(patientcollection *mongo.Collection, ctx context.Context)
 }
 
 func (u *PatientServiceImpl) CreatePatient(patient *models.Patient) error {
+	patient.VisitDate = time.Now()
 	_, err := u.patientCollection.InsertOne(u.ctx, patient)
 	return err
 }
@@ -61,7 +63,7 @@ func (u *PatientServiceImpl) GetAll() ([]*models.Patient, error) {
 
 func (u *PatientServiceImpl) UpdatePatient(patient *models.Patient) error {
 	filter := bson.D{bson.E{Key: "patient_id", Value: patient.Id}}
-	update := bson.D{bson.E{Key: "$set", Value: bson.D{bson.E{Key: "patient_id", Value: patient.Id}, bson.E{Key: "patient_name", Value: patient.Name}, bson.E{Key: "patient_surname", Value: patient.Surname}, bson.E{Key: "patient_age", Value: patient.Age}, bson.E{Key: "patient_address", Value: patient.Address}, bson.E{Key: "patient_phoneNumber", Value: patient.PhoneNumber}, bson.E{Key: "patient_groupOfBlood", Value: patient.BloodGroup}, bson.E{Key: "patient_diseas", Value: patient.Diseas}}}}
+	update := bson.D{bson.E{Key: "$set", Value: bson.D{bson.E{Key: "patient_id", Value: patient.Id}, bson.E{Key: "patient_name", Value: patient.Name}, bson.E{Key: "patient_surname", Value: patient.Surname}, bson.E{Key: "patient_age", Value: patient.Age}, bson.E{Key: "patient_address", Value: patient.Address}, bson.E{Key: "phoneNumber", Value: patient.PhoneNumber}, bson.E{Key: "patient_groupOfBlood", Value: patient.BloodGroup}, bson.E{Key: "patient_diseases", Value: patient.Diseases}, bson.E{Key: "visitDate", Value: time.Now()}}}}
 	result, _ := u.patientCollection.UpdateOne(u.ctx, filter, update)
 	if result.MatchedCount != 1 {
 		return errors.New("no matched document found for update")

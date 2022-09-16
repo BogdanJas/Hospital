@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-type Diseas struct {
+type Diseases struct {
 	Fracture  bool `json:"fracture" bson:"fracture"`
 	Heartburn bool `json:"heartburn" bson:"heartburn"`
 	Headache  bool `json:"headache" bson:"headache"`
@@ -19,13 +19,13 @@ type Address struct {
 }
 
 type Patient struct {
-	Id          int       `json:"id" bson:"user_id"`
+	Id          int       `json:"id" bson:"patient_id"`
 	Name        string    `json:"name" bson:"patient_name"`
 	Surname     string    `json:"surname" bson:"patient_surname"`
 	Age         int       `json:"age" bson:"patient_age"`
 	Address     Address   `json:"address" bson:"patient_address"`
 	PhoneNumber string    `json:"phoneNumber" bson:"phoneNumber"`
 	VisitDate   time.Time `json:"visitDate" bson:"visitDate"`
-	BloodGroup  string	  `json:"groupOfBlood" bson:"patient_groupOfBlood"`
-	Diseas      Diseas 	  `json:"diseas" bson:"patient_diseas"`
+	BloodGroup  string    `json:"groupOfBlood" bson:"patient_groupOfBlood"`
+	Diseases    Diseases  `json:"diseases" bson:"patient_diseases"`
 }
